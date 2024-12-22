@@ -10,7 +10,7 @@ function getRandomColor() {
 function createTree() {
     const tree = document.getElementById('tree');
     const height = 12; // Wysokość choinki
-    const decorations = ['*', 'o', '@', '#']; // Ozdoby
+    const decorations = ['*', 'o', '@', '#', '♦', '♥']; // Ozdoby
 
     for (let i = 0; i < height; i++) {
         const level = document.createElement('div');
@@ -23,7 +23,7 @@ function createTree() {
         for (let k = 0; k < (2 * i + 1); k++) {
             if (Math.random() > 0.8) {
                 const decoration = decorations[Math.floor(Math.random() * decorations.length)];
-                row += `<span style="color:${getRandomColor()}">${decoration}</span>`;
+                row += `<span class="decoration" style="color:${getRandomColor()}">${decoration}</span>`;
             } else {
                 row += '^';
             }
@@ -41,12 +41,29 @@ function createTree() {
 
 // Funkcja do animacji choinki
 function animateTree() {
-    const elements = document.querySelectorAll('.tree div span');
-    elements.forEach(element => {
+    const decorations = document.querySelectorAll('.decoration');
+    decorations.forEach(element => {
         element.style.color = getRandomColor();
+        element.style.animation = `blink ${Math.random() + 0.5}s infinite`;
     });
 }
 
-// Utwórz choinkę i zacznij animację
+// Funkcja do generowania płatków śniegu
+function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.innerHTML = '❄';
+    snowflake.classList.add('snowflake');
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+    document.body.appendChild(snowflake);
+
+    // Usunięcie płatka śniegu po zakończeniu animacji
+    snowflake.addEventListener('animationend', () => {
+        snowflake.remove();
+    });
+}
+
+// Utwórz choinkę, zacznij animację i generuj śnieg
 createTree();
 setInterval(animateTree, 1000);
+setInterval(createSnowflake, 200);
