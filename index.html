@@ -22,7 +22,14 @@
         }
         .tree div {
             font-size: 20px;
-            animation: blink 1s infinite;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 1em;
+            animation: fall linear infinite;
+            opacity: 0.8;
+            color: #fff;
         }
         @keyframes blink {
             0%, 100% {
@@ -30,6 +37,11 @@
             }
             50% {
                 opacity: 0;
+            }
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
             }
         }
     </style>
